@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:MyMauiApp.Models"
+             x:Class="MyMauiApp.HaberlerSayfasi"
+             Title="Haberler">
+    <ContentPage.Resources>
+        <Style x:Key="CategoryButtonStyle" TargetType="Button">
+            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
+            <Setter Property="BorderColor" Value="Transparent"/>
+            <Setter Property="CornerRadius" Value="15"/>
+        </Style>
+        <Style x:Key="CategoryButtonSelectedStyle" TargetType="Button" BasedOn="{StaticResource CategoryButtonStyle}">
+            <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+    </ContentPage.Resources>
+    <Grid RowDefinitions="Auto,Auto,*" ColumnDefinitions="*">
+        
+        <ScrollView Grid.Row="0" Orientation="Horizontal" HorizontalScrollBarVisibility="Never">
+            <HorizontalStackLayout x:Name="CategoryNavLayout" Spacing="5" Padding="5">
+                <Button Text="Gündem" Clicked="OnCategoryClicked" CommandParameter="gundem" Style="{StaticResource CategoryButtonSelectedStyle}"/>
+                <Button Text="Dünya" Clicked="OnCategoryClicked" CommandParameter="dunya" Style="{StaticResource CategoryButtonStyle}"/>
+                <Button Text="Ekonomi" Clicked="OnCategoryClicked" CommandParameter="ekonomi" Style="{StaticResource CategoryButtonStyle}"/>
+                <Button Text="Spor" Clicked="OnCategoryClicked" CommandParameter="spor" Style="{StaticResource CategoryButtonStyle}"/>
+                <Button Text="Teknoloji" Clicked="OnCategoryClicked" CommandParameter="teknoloji" Style="{StaticResource CategoryButtonStyle}"/>
+            </HorizontalStackLayout>
+        </ScrollView>
+
+        <ActivityIndicator Grid.Row="1" x:Name="NewsLoadingIndicator" IsRunning="False" IsVisible="False" HorizontalOptions="Center" Color="Blue"/>
+
+        <CollectionView Grid.Row="2" x:Name="NewsCollectionView" Margin="5,0,5,0" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:NewsItem">
+                    <Frame Padding="10" Margin="0,5" CornerRadius="5" BorderColor="LightGray" HasShadow="True">
+                        <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="5" ColumnSpacing="10">
+                            <Image Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" 
+                                   Aspect="AspectFill" HeightRequest="100" WidthRequest="100" VerticalOptions="Start"
+                                   Source="{Binding KucukResim, TargetNullValue='dotnet_bot.png', FallbackValue='dotnet_bot.png'}"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Baslik}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="2"/>
+                            <Label Grid.Row="1" Grid.Column="1" Text="{Binding Aciklama}" FontSize="Small" LineBreakMode="TailTruncation" MaxLines="3" />
+                            <Label Grid.Row="2" Grid.Column="1" Text="{Binding YayinTarihi}" FontSize="Micro" TextColor="Gray"/>
+                            <Button Grid.Row="3" Grid.Column="1" Text="Devamını Oku" FontSize="Small" HorizontalOptions="End"
+                                    Clicked="OnReadMoreClicked" CommandParameter="{Binding .}"/>
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <StackLayout Padding="20">
+                    <Label Text="Gösterilecek haber yok veya yüklenemedi." HorizontalOptions="Center" VerticalOptions="Center"/>
+                </StackLayout>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+</ContentPage>

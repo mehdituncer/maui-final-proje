@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.IlSecimSayfasi"
+             Title="İl Seçin">
+    <VerticalStackLayout Spacing="10" Padding="10">
+        <SearchBar x:Name="IlSearchBar" Placeholder="İl ara..." TextChanged="IlSearchBar_TextChanged"/>
+        <ListView x:Name="IllerListView" ItemSelected="IllerListView_ItemSelected">
+            <ListView.ItemTemplate>
+                <DataTemplate x:DataType="x:String">
+                    <TextCell Text="{Binding .}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </VerticalStackLayout>
+</ContentPage>

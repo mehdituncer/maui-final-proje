@@ -1,0 +1,109 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = true
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net9.0-android
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = MyMauiApp
+build_property.ProjectDir = /home/mehdi/Desktop/olsun/
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 9.0
+build_property.EnableCodeStyleSeverity = 
+
+[/home/mehdi/Desktop/olsun/AnaSayfa.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.AnaSayfa.xaml
+build_metadata.AdditionalFiles.TargetPath = AnaSayfa.xaml
+build_metadata.AdditionalFiles.RelativePath = AnaSayfa.xaml
+
+[/home/mehdi/Desktop/olsun/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[/home/mehdi/Desktop/olsun/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[/home/mehdi/Desktop/olsun/AyarlarSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.AyarlarSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = AyarlarSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = AyarlarSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/DovizKurlariSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.DovizKurlariSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = DovizKurlariSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = DovizKurlariSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/GirisSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.GirisSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = GirisSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = GirisSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/GorevEklemeSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.GorevEklemeSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = GorevEklemeSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = GorevEklemeSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/HaberDetaySayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.HaberDetaySayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = HaberDetaySayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = HaberDetaySayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/HaberlerSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.HaberlerSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = HaberlerSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = HaberlerSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/HavaDurumuSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.HavaDurumuSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = HavaDurumuSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = HavaDurumuSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/IlSecimSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.IlSecimSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = IlSecimSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = IlSecimSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/KayitOlSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.KayitOlSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = KayitOlSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = KayitOlSayfasi.xaml
+
+[/home/mehdi/Desktop/olsun/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Colors.xaml
+
+[/home/mehdi/Desktop/olsun/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources/Styles/Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources/Styles/Styles.xaml
+
+[/home/mehdi/Desktop/olsun/YapilacaklarSayfasi.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = MyMauiApp.YapilacaklarSayfasi.xaml
+build_metadata.AdditionalFiles.TargetPath = YapilacaklarSayfasi.xaml
+build_metadata.AdditionalFiles.RelativePath = YapilacaklarSayfasi.xaml

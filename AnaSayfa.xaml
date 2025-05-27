@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.AnaSayfa">
+
+    <ScrollView>
+        <VerticalStackLayout
+            Spacing="25"
+            Padding="30,0"
+            VerticalOptions="Center">
+
+
+            <Label
+                Text="ödev-3"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center"
+                FontAttributes="Bold"
+                TextColor="#FFEB6A00"/>
+
+            <Border
+                StrokeThickness="0"
+                BackgroundColor="Transparent"
+                HeightRequest="150"
+                WidthRequest="150"
+                HorizontalOptions="Center">
+                <Border.StrokeShape>
+                    <RoundRectangle CornerRadius="75"/>
+                </Border.StrokeShape>
+                <Image
+                    Source="mehdi.jpg"
+                    HeightRequest="150"
+                    WidthRequest="150"
+                    Aspect="AspectFill"/>
+            </Border>
+
+            <Label
+                Text="mehdi tunçer"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="32"
+                HorizontalOptions="Center"
+                FontAttributes="Bold"/>
+
+            <Label
+                FontSize="18"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="bartın üniversitesi&#x0a;bilgisayar mühendisliği"/>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

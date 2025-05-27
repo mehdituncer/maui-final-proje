@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.GorevEklemeSayfasi"
+             Title="Yeni Görev Ekle">
+    <VerticalStackLayout Spacing="15" Padding="20">
+        <Label Text="Görev Başlığı" FontSize="Small"/>
+        <Entry x:Name="BaslikEntry" Placeholder="Görev başlığını girin"/>
+
+        <Label Text="Açıklama" FontSize="Small"/>
+        <Editor x:Name="AciklamaEditor" Placeholder="Görev açıklamasını girin" HeightRequest="100" AutoSize="Disabled"/>
+
+        <Label Text="Bitiş Tarihi" FontSize="Small"/>
+        <DatePicker x:Name="BitisTarihiPicker"/>
+
+        <Label Text="Bitiş Saati" FontSize="Small"/>
+        <TimePicker x:Name="BitisSaatiPicker"/>
+
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="10" Margin="0,20,0,0">
+            <Button Grid.Column="0" Text="Tamam" Clicked="TamamButton_Clicked"/>
+            <Button Grid.Column="1" Text="İptal" Clicked="IptalButton_Clicked"/>
+        </Grid>
+    </VerticalStackLayout>
+</ContentPage>

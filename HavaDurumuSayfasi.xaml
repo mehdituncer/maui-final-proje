@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.HavaDurumuSayfasi"
+             Title="Hava Durumu">
+    <ScrollView>
+        <VerticalStackLayout x:Name="MainWeatherLayout" Spacing="15" Padding="10">
+
+            <Button Text="İl Ekle" x:Name="AddCityButton" Clicked="AddCityButton_Clicked" HorizontalOptions="Fill"/>
+
+            <Label Text="5 Günlük Hava Tahmini" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,10" x:Name="PageSubTitleLabel"/>
+            
+            <!-- City weather cards will be added here dynamically from code-behind -->
+            
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

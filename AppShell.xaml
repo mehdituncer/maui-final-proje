@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="MyMauiApp.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:MyMauiApp"
+    Title="MyMauiApp"
+    Shell.FlyoutBehavior="Flyout">
+
+    <ShellContent
+        Title="Giriş Yap"
+        Route="GirisSayfasi"
+        ContentTemplate="{DataTemplate local:GirisSayfasi}"
+        FlyoutItemIsVisible="False" 
+        Shell.FlyoutBehavior="Disabled" />
+
+    <ShellContent
+        Title="Ana Sayfa"
+        ContentTemplate="{DataTemplate local:AnaSayfa}"
+        Route="AnaSayfa" /> 
+    
+    <ShellContent
+        Title="Döviz Kurları"
+        ContentTemplate="{DataTemplate local:DovizKurlariSayfasi}"
+        Route="DovizKurlariSayfasi" />
+
+    <ShellContent
+        Title="Haberler"
+        ContentTemplate="{DataTemplate local:HaberlerSayfasi}"
+        Route="HaberlerSayfasi" />
+
+    <ShellContent
+        Title="Hava Durumu"
+        ContentTemplate="{DataTemplate local:HavaDurumuSayfasi}"
+        Route="HavaDurumuSayfasi" />
+
+    <ShellContent
+        Title="Yapılacaklar"
+        ContentTemplate="{DataTemplate local:YapilacaklarSayfasi}"
+        Route="YapilacaklarSayfasi" />
+
+    <ShellContent
+        Title="Ayarlar"
+        ContentTemplate="{DataTemplate local:AyarlarSayfasi}"
+        Route="AyarlarSayfasi" />
+
+</Shell>

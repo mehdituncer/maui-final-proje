@@ -1,0 +1,11 @@
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MyMauiApp.GirisSayfasi"
+             Title="Giriş Yap">
+    <VerticalStackLayout Spacing="20" Padding="30,0" VerticalOptions="Center">
+        <Entry x:Name="EmailEntry" Placeholder="E-posta" Keyboard="Email"/>
+        <Entry x:Name="PasswordEntry" Placeholder="Şifre" IsPassword="True"/>
+        <Button Text="Giriş Yap" Clicked="OnLoginButtonClicked"/>
+        <Button Text="Kayıt Ol" Clicked="OnRegisterButtonClicked"/>
+    </VerticalStackLayout>
+</ContentPage>
