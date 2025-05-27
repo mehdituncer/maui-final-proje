@@ -13,10 +13,10 @@
             <Label
                 Text="ödev-3"
                 SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
+                FontSize="36"
                 HorizontalOptions="Center"
                 FontAttributes="Bold"
-                TextColor="#FFEB6A00"/>
+                TextColor="darkorange"/>
 
             <Border
                 StrokeThickness="0"
@@ -38,6 +38,13 @@
                 Text="mehdi tunçer"
                 SemanticProperties.HeadingLevel="Level1"
                 FontSize="32"
+                HorizontalOptions="Center"
+                FontAttributes="Bold"/>
+
+            <Label
+                Text="24110310040"
+                SemanticProperties.HeadingLevel="Level1"
+                FontSize="24"
                 HorizontalOptions="Center"
                 FontAttributes="Bold"/>
 

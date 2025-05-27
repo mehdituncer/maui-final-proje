@@ -7,11 +7,10 @@
     <ContentPage.Resources>
         <Style x:Key="CategoryButtonStyle" TargetType="Button">
             <Setter Property="FontSize" Value="Small"/>
-            <Setter Property="Padding" Value="10,5"/>
-            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="Padding" Value="12,3"/>
+            <Setter Property="BackgroundColor" Value="lightGray"/>
             <Setter Property="TextColor" Value="{AppThemeBinding Light={StaticResource Gray600}, Dark={StaticResource Gray300}}"/>
-            <Setter Property="BorderColor" Value="Transparent"/>
-            <Setter Property="CornerRadius" Value="15"/>
+            
         </Style>
         <Style x:Key="CategoryButtonSelectedStyle" TargetType="Button" BasedOn="{StaticResource CategoryButtonStyle}">
             <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
@@ -31,23 +30,24 @@
             </HorizontalStackLayout>
         </ScrollView>
 
-        <ActivityIndicator Grid.Row="1" x:Name="NewsLoadingIndicator" IsRunning="False" IsVisible="False" HorizontalOptions="Center" Color="Blue"/>
+        <ActivityIndicator Grid.Row="1" x:Name="NewsLoadingIndicator" IsRunning="False" IsVisible="False" HorizontalOptions="Center" Color="darkorange"/>
 
         <CollectionView Grid.Row="2" x:Name="NewsCollectionView" Margin="5,0,5,0" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:NewsItem">
-                    <Frame Padding="10" Margin="0,5" CornerRadius="5" BorderColor="LightGray" HasShadow="True">
+                    <Border Padding="10" Margin="0,5" Stroke="LightGray">
                         <Grid RowDefinitions="Auto,Auto,Auto,Auto" ColumnDefinitions="Auto,*" RowSpacing="5" ColumnSpacing="10">
                             <Image Grid.Row="0" Grid.RowSpan="4" Grid.Column="0" 
-                                   Aspect="AspectFill" HeightRequest="100" WidthRequest="100" VerticalOptions="Start"
-                                   Source="{Binding KucukResim, TargetNullValue='dotnet_bot.png', FallbackValue='dotnet_bot.png'}"/>
-                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Baslik}" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="2"/>
+                                   Aspect="AspectFill" HeightRequest="130" WidthRequest="130" VerticalOptions="Start"
+                                   Source="{Binding KucukResim, TargetNullValue='mehdi.jpg', FallbackValue='mehdi.jpg'}"/>
+                            <Label Grid.Row="0" Grid.Column="1" Text="{Binding Baslik}"
+                                    FontSize="Medium" FontAttributes="Bold" LineBreakMode="TailTruncation" MaxLines="2"/>
                             <Label Grid.Row="1" Grid.Column="1" Text="{Binding Aciklama}" FontSize="Small" LineBreakMode="TailTruncation" MaxLines="3" />
                             <Label Grid.Row="2" Grid.Column="1" Text="{Binding YayinTarihi}" FontSize="Micro" TextColor="Gray"/>
-                            <Button Grid.Row="3" Grid.Column="1" Text="Devamını Oku" FontSize="Small" HorizontalOptions="End"
-                                    Clicked="OnReadMoreClicked" CommandParameter="{Binding .}"/>
+                            <Button Grid.Row="3" Grid.Column="1" Text="Devamını Oku >>" FontSize="Small" HorizontalOptions="End"
+                                    Clicked="OnReadMoreClicked" CommandParameter="{Binding .}" BackgroundColor="Transparent" TextColor="DarkOrange" FontAttributes="Bold" />
                         </Grid>
-                    </Frame>
+                    </Border>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
             <CollectionView.EmptyView>

@@ -1,17 +1,43 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:MyMauiApp"
              x:Class="MyMauiApp.HavaDurumuSayfasi"
              Title="Hava Durumu">
     <ScrollView>
-        <VerticalStackLayout x:Name="MainWeatherLayout" Spacing="15" Padding="10">
+        <VerticalStackLayout Spacing="15" Padding="10">
 
-            <Button Text="İl Ekle" x:Name="AddCityButton" Clicked="AddCityButton_Clicked" HorizontalOptions="Fill"/>
+        <Button FontSize="Medium" FontAttributes="Bold" Text="+ İl Ekle" Clicked="AddCityButton_Clicked" HorizontalOptions="Fill"/>
 
-            <Label Text="5 Günlük Hava Tahmini" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,10" x:Name="PageSubTitleLabel"/>
+        <Label Text="5 Günlük Hava Tahmini" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,5"/>
             
-            <!-- City weather cards will be added here dynamically from code-behind -->
+        <CollectionView ItemsSource="{Binding GosterilenIller}" Margin="0,10,0,0">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="local:SehirHavaDurumuViewModel">
+                    <Border Padding="10" Stroke="LightGray" StrokeThickness="1" Margin="0,0,0,10">
+                        <VerticalStackLayout Spacing="5">
+                            <Grid ColumnSpacing="10" VerticalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding DisplayName}" FontSize="18" FontAttributes="Bold" HorizontalOptions="Start" VerticalOptions="Center" Grid.Row="0" Grid.Column="0"/>
+                                <Button Text="X Kaldır"
+                                        Command="{Binding RemoveCommand}"
+                                        CommandParameter="{Binding .}"
+                                        HorizontalOptions="End" VerticalOptions="Center" Grid.Row="0" Grid.Column="1"
+                                        BackgroundColor="Transparent"
+                                        TextColor="DarkOrange"
+                                        FontAttributes="Bold"
+                                />
+                            </Grid>
+                            <Image Aspect="AspectFit" Source="{Binding WeatherImageSource}"/>
+                        </VerticalStackLayout>
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
             
-        </VerticalStackLayout>
+    </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

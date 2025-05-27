@@ -5,53 +5,53 @@
              Title="Döviz Kurları">
     <ScrollView>
         <VerticalStackLayout Spacing="10" Padding="10">
-            <ActivityIndicator x:Name="LoadingIndicator" IsRunning="False" IsVisible="False" HorizontalOptions="Center" Color="Blue"/>
+            <ActivityIndicator x:Name="LoadingIndicator" IsRunning="False" IsVisible="False" HorizontalOptions="Center" Color="darkorange"/>
             <Label x:Name="UpdateDateLabel" FontSize="Small" HorizontalOptions="Center"/>
             
-            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+            <Border Padding="10" Stroke="LightGray">
                 <VerticalStackLayout>
                     <Label Text="USD (Dolar)" FontSize="Medium" FontAttributes="Bold"/>
                     <Label x:Name="UsdBuyLabel" Text="Alış: -" />
                     <Label x:Name="UsdSellLabel" Text="Satış: -" />
                     <Label x:Name="UsdChangeLabel" Text="Değişim: -" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+            <Border Padding="10" Stroke="LightGray">
                 <VerticalStackLayout>
                     <Label Text="EUR (Euro)" FontSize="Medium" FontAttributes="Bold"/>
                     <Label x:Name="EurBuyLabel" Text="Alış: -" />
                     <Label x:Name="EurSellLabel" Text="Satış: -" />
                     <Label x:Name="EurChangeLabel" Text="Değişim: -" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+            <Border Padding="10" Stroke="LightGray">
                 <VerticalStackLayout>
                     <Label Text="Gram Altın" FontSize="Medium" FontAttributes="Bold"/>
                     <Label x:Name="GoldGramBuyLabel" Text="Alış: -" />
                     <Label x:Name="GoldGramSellLabel" Text="Satış: -" />
                     <Label x:Name="GoldGramChangeLabel" Text="Değişim: -" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+            <Border Padding="10" Stroke="LightGray">
                 <VerticalStackLayout>
                     <Label Text="Gümüş" FontSize="Medium" FontAttributes="Bold"/>
                     <Label x:Name="SilverBuyLabel" Text="Alış: -" />
                     <Label x:Name="SilverSellLabel" Text="Satış: -" />
                     <Label x:Name="SilverChangeLabel" Text="Değişim: -" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
 
-            <Frame Padding="10" CornerRadius="5" BorderColor="LightGray">
+            <Border Padding="10" Stroke="LightGray">
                 <VerticalStackLayout>
                     <Label Text="Gram Platin" FontSize="Medium" FontAttributes="Bold"/>
                     <Label x:Name="PlatinumGramBuyLabel" Text="Alış: -" />
                     <Label x:Name="PlatinumGramSellLabel" Text="Satış: -" />
                     <Label x:Name="PlatinumGramChangeLabel" Text="Değişim: -" />
                 </VerticalStackLayout>
-            </Frame>
+            </Border>
             
             <Button x:Name="RefreshButton" Text="Kurları Yenile" Clicked="OnRefreshRatesClicked" HorizontalOptions="Fill"/>
         </VerticalStackLayout>

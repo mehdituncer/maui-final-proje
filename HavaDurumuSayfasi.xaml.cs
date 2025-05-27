@@ -3,25 +3,73 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Storage; // For Preferences
 using System.Linq;
 using System.Collections.Generic;
+using System.Collections.ObjectModel; // For ObservableCollection
+using System.ComponentModel; // For INotifyPropertyChanged
 using System.Diagnostics;
+using System.Runtime.CompilerServices; // For CallerMemberName
 using System.Text.Json; // For JSON serialization
 using System.Threading.Tasks;
+using System.Windows.Input; // For ICommand
 
 namespace MyMauiApp
 {
+    public class SehirHavaDurumuViewModel : INotifyPropertyChanged
+    {
+        private string _displayName = string.Empty;
+        public string DisplayName
+        {
+            get => _displayName;
+            set => SetProperty(ref _displayName, value);
+        }
+
+        private string _apiName = string.Empty;
+        public string ApiName
+        {
+            get => _apiName;
+            set => SetProperty(ref _apiName, value);
+        }
+
+        public string WeatherImageSource => $"http://www.mgm.gov.tr/sunum/tahmin-show-2.aspx?basla=1&bitir=5&rZ=fff&m={ApiName}";
+
+        public ICommand RemoveCommand { get; set; } = new Command(() => {}); // Initialize to a default non-null command
+
+        public event PropertyChangedEventHandler? PropertyChanged; // Made nullable
+
+        protected bool SetProperty<T>(ref T backingStore, T value,
+            [CallerMemberName] string propertyName = "",
+            System.Action? onChanged = null) // Made nullable
+        {
+            if (EqualityComparer<T>.Default.Equals(backingStore, value))
+                return false;
+
+            backingStore = value;
+            onChanged?.Invoke();
+            OnPropertyChanged(propertyName);
+            if (propertyName == nameof(ApiName)) // If ApiName changes, WeatherImageSource also changes
+            {
+                OnPropertyChanged(nameof(WeatherImageSource));
+            }
+            return true;
+        }
+
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = "") =>
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
+
     public partial class HavaDurumuSayfasi : ContentPage
     {
-        private const string TemelResimAdresi = "http://www.mgm.gov.tr/sunum/tahmin-show-2.aspx?basla=1&bitir=5&rZ=fff";
-        private const string FavoriIllerKey = "HavaDurumuFavoriIller"; 
-        
-        private List<string> _tumIllerDisplayName = new List<string>(); 
-        private List<string> _gosterilenIllerApiAdlari = new List<string>(); 
+        private const string TemelResimAdresi = "http://www.mgm.gov.tr/sunum/tahmin-show-2.aspx?basla=1&bitir=5&rZ=fff"; // Kept for reference, but image source is in ViewModel
+        private const string FavoriIllerKey = "HavaDurumuFavoriIller";
+
+        private List<string> _tumIllerDisplayName = new List<string>();
+        public ObservableCollection<SehirHavaDurumuViewModel> GosterilenIller { get; set; }
 
         public HavaDurumuSayfasi()
         {
             InitializeComponent();
-            IlleriYukle(); 
-            // KaydedilmisIlleriYukle will be called in OnAppearing, no need for MevcutResimleriYukleVeTakipEt here
+            IlleriYukle();
+            GosterilenIller = new ObservableCollection<SehirHavaDurumuViewModel>();
+            BindingContext = this; // Set BindingContext for the page to itself for CollectionView binding
         }
 
         protected override void OnAppearing()
@@ -32,7 +80,7 @@ namespace MyMauiApp
 
         private void IlleriYukle()
         {
-            var sehirler = new List<string> 
+            var sehirler = new List<string>
             {
                 "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya", "Artvin",
                 "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu", "Burdur", "Bursa", "Çanakkale",
@@ -44,93 +92,39 @@ namespace MyMauiApp
                 "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman", "Kırıkkale", "Batman", "Şırnak",
                 "Bartın", "Ardahan", "Iğdır", "Yalova", "Karabük", "Kilis", "Osmaniye", "Düzce"
             };
-            _tumIllerDisplayName.AddRange(sehirler); 
-            _tumIllerDisplayName.Sort(); 
+            _tumIllerDisplayName.AddRange(sehirler);
+            _tumIllerDisplayName.Sort();
         }
-        
+
         private string NormalizeCityNameForApi(string displayName)
         {
             string normalized = displayName.ToUpperInvariant()
                                     .Replace("Ç", "C")
                                     .Replace("Ğ", "G")
-                                    .Replace("İ", "I") 
+                                    .Replace("İ", "I")
                                     .Replace("Ö", "O")
                                     .Replace("Ş", "S")
-                                    .Replace("Ü", "U");
-            if (displayName == "Kahramanmaraş") return "K.MARAS"; 
+                                    .Replace("Ü", "U")
+                                    .Replace("ç", "C")
+                                    .Replace("ğ", "G")
+                                    .Replace("ı", "I")
+                                    .Replace("ö", "O")
+                                    .Replace("ş", "S")
+                                    .Replace("ü", "U");
+            if (displayName == "Kahramanmaraş") return "K.MARAS";
             return normalized;
         }
-        
+
         private string GetDisplayNameForApiName(string apiName)
         {
             if (apiName == "K.MARAS") return "Kahramanmaraş";
-            // Find the original display name from _tumIllerDisplayName that normalizes to this apiName
             return _tumIllerDisplayName.FirstOrDefault(dn => NormalizeCityNameForApi(dn) == apiName) ?? apiName;
-        }
-
-        private void IlKartiOlusturVeEkle(string displayName, string apiName)
-        {
-            var yeniIlCercevesi = new Border 
-            {
-                Padding = new Thickness(10),
-                Stroke = Colors.LightGray, 
-                StrokeThickness = 1,
-                Margin = new Thickness(0,0,0,10)
-            };
-
-            var dikeyYerlesim = new VerticalStackLayout { Spacing = 5 };
-            var ustGrid = new Grid { ColumnSpacing = 10, VerticalOptions = LayoutOptions.Center };
-            ustGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Star });
-            ustGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
-
-            var ilEtiketi = new Label
-            {
-                Text = displayName, 
-                FontSize = 18, 
-                FontAttributes = FontAttributes.Bold,
-                HorizontalOptions = LayoutOptions.Start
-            };
-            Grid.SetColumn(ilEtiketi, 0);
-
-            var kaldirButonu = new Button
-            {
-                Text = "Kaldır",
-                HorizontalOptions = LayoutOptions.End,
-                CommandParameter = yeniIlCercevesi 
-            };
-            kaldirButonu.Clicked += RemoveCityButton_Clicked; 
-            Grid.SetColumn(kaldirButonu, 1);
-
-            ustGrid.Children.Add(ilEtiketi);
-            ustGrid.Children.Add(kaldirButonu);
-
-            var havaDurumuResmi = new Image
-            {
-                WidthRequest = 300, 
-                HeightRequest = 100, 
-                Aspect = Aspect.AspectFit,
-                Source = $"{TemelResimAdresi}&m={apiName}"
-            };
-
-            dikeyYerlesim.Children.Add(ustGrid);
-            dikeyYerlesim.Children.Add(havaDurumuResmi);
-            yeniIlCercevesi.Content = dikeyYerlesim;
-            
-            var pageSubTitleLabel = MainWeatherLayout.Children.FirstOrDefault(c => c is Label lbl && lbl.Text == "5 Günlük Hava Tahmini");
-            int insertIndex = MainWeatherLayout.Children.IndexOf(pageSubTitleLabel ?? AddCityButton) + 1;
-            if (insertIndex < 0 || insertIndex > MainWeatherLayout.Children.Count) insertIndex = MainWeatherLayout.Children.Count; // Ensure valid index
-
-            MainWeatherLayout.Children.Insert(insertIndex, yeniIlCercevesi);
         }
 
         private void KaydedilmisIlleriYukle()
         {
-            var dynamicBorders = MainWeatherLayout.Children.OfType<Border>().ToList();
-            foreach (var border in dynamicBorders)
-            {
-                MainWeatherLayout.Children.Remove(border);
-            }
-            _gosterilenIllerApiAdlari.Clear();
+            GosterilenIller.Clear();
+            List<string> kaydedilmisApiAdlari = new List<string>();
 
             string kaydedilmisIllerJson = Preferences.Get(FavoriIllerKey, string.Empty);
             if (!string.IsNullOrWhiteSpace(kaydedilmisIllerJson))
@@ -138,37 +132,44 @@ namespace MyMauiApp
                 try
                 {
                     var illerListesi = JsonSerializer.Deserialize<List<string>>(kaydedilmisIllerJson);
-                    if (illerListesi != null && illerListesi.Any()) // Check if list is not null and has items
+                    if (illerListesi != null && illerListesi.Any())
                     {
-                        _gosterilenIllerApiAdlari.AddRange(illerListesi);
+                        kaydedilmisApiAdlari.AddRange(illerListesi);
                     }
                 }
                 catch (JsonException ex)
                 {
                     Debug.WriteLine($"Favori iller deserializasyon hatası: {ex.Message}");
-                    _gosterilenIllerApiAdlari.Clear(); 
+                    kaydedilmisApiAdlari.Clear();
                 }
             }
 
-            if (!_gosterilenIllerApiAdlari.Any())
+            if (!kaydedilmisApiAdlari.Any())
             {
-                _gosterilenIllerApiAdlari.Add("ISTANBUL");
-                _gosterilenIllerApiAdlari.Add("ANKARA");
-                _gosterilenIllerApiAdlari.Add("BARTIN");
-                FavoriIlleriKaydet(); 
+                kaydedilmisApiAdlari.Add("ISTANBUL");
+                kaydedilmisApiAdlari.Add("ANKARA");
+                kaydedilmisApiAdlari.Add("BARTIN");
+                FavoriIlleriKaydet(kaydedilmisApiAdlari); // Save defaults if none exist
             }
 
-            foreach (var apiName in _gosterilenIllerApiAdlari)
+            foreach (var apiName in kaydedilmisApiAdlari)
             {
-                IlKartiOlusturVeEkle(GetDisplayNameForApiName(apiName), apiName);
+                GosterilenIller.Add(new SehirHavaDurumuViewModel
+                {
+                    ApiName = apiName,
+                    DisplayName = GetDisplayNameForApiName(apiName),
+                    RemoveCommand = new Command<SehirHavaDurumuViewModel>(RemoveCity)
+                });
             }
         }
 
-        private void FavoriIlleriKaydet()
+        private void FavoriIlleriKaydet(List<string>? apiAdlariListesi = null) // Made nullable
         {
             try
             {
-                string kaydedilecekIllerJson = JsonSerializer.Serialize(_gosterilenIllerApiAdlari);
+                // If a list is provided, use it; otherwise, use the ApiNames from GosterilenIller
+                var apiAdlari = apiAdlariListesi ?? GosterilenIller.Select(vm => vm.ApiName).ToList();
+                string kaydedilecekIllerJson = JsonSerializer.Serialize(apiAdlari);
                 Preferences.Set(FavoriIllerKey, kaydedilecekIllerJson);
             }
             catch (JsonException ex)
@@ -176,46 +177,38 @@ namespace MyMauiApp
                 Debug.WriteLine($"Favori iller serileştirme hatası: {ex.Message}");
             }
         }
-
-        private void RemoveCityButton_Clicked(object? sender, System.EventArgs e)
+        
+        private void RemoveCity(SehirHavaDurumuViewModel cityToRemove)
         {
-            if (sender is Button buton && buton.CommandParameter is Border kaldirilacakIlCercevesi)
+            if (cityToRemove != null && GosterilenIller.Contains(cityToRemove))
             {
-                if (kaldirilacakIlCercevesi.Content is VerticalStackLayout vsl &&
-                    vsl.Children.FirstOrDefault() is Grid headerGrid &&
-                    headerGrid.Children.FirstOrDefault(c => c is Label) is Label ilEtiketi)
-                {
-                    string displayName = ilEtiketi.Text;
-                    string apiName = NormalizeCityNameForApi(displayName);
-                    bool removed = _gosterilenIllerApiAdlari.Remove(apiName);
-                    if(removed) FavoriIlleriKaydet();
-                }
-                
-                if (MainWeatherLayout.Children.Contains(kaldirilacakIlCercevesi))
-                {
-                     MainWeatherLayout.Children.Remove(kaldirilacakIlCercevesi);
-                }
+                GosterilenIller.Remove(cityToRemove);
+                FavoriIlleriKaydet();
             }
         }
 
         private async void AddCityButton_Clicked(object? sender, System.EventArgs e)
         {
-            var ilSecimSayfasi = new IlSecimSayfasi(_tumIllerDisplayName); 
+            var ilSecimSayfasi = new IlSecimSayfasi(_tumIllerDisplayName);
             await Navigation.PushModalAsync(new NavigationPage(ilSecimSayfasi));
             string? secilenIlDisplayName = await ilSecimSayfasi.WaitForSelectionAsync();
 
-            if (!string.IsNullOrWhiteSpace(secilenIlDisplayName)) 
+            if (!string.IsNullOrWhiteSpace(secilenIlDisplayName))
             {
                 string secilenIlApiName = NormalizeCityNameForApi(secilenIlDisplayName);
 
-                if (_gosterilenIllerApiAdlari.Contains(secilenIlApiName))
+                if (GosterilenIller.Any(vm => vm.ApiName == secilenIlApiName))
                 {
                     await DisplayAlert("Uyarı", $"{secilenIlDisplayName} zaten listede mevcut.", "Tamam");
                     return;
                 }
-                
-                IlKartiOlusturVeEkle(secilenIlDisplayName, secilenIlApiName);
-                _gosterilenIllerApiAdlari.Add(secilenIlApiName);
+
+                GosterilenIller.Add(new SehirHavaDurumuViewModel
+                {
+                    ApiName = secilenIlApiName,
+                    DisplayName = secilenIlDisplayName,
+                    RemoveCommand = new Command<SehirHavaDurumuViewModel>(RemoveCity)
+                });
                 FavoriIlleriKaydet();
             }
         }

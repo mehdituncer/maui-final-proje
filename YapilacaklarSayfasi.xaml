@@ -36,7 +36,7 @@
     </ContentPage.Resources>
     
     <Grid RowDefinitions="Auto, *">
-        <Button Grid.Row="0" Text="Görev Ekle" x:Name="GorevEkleButton" Clicked="GorevEkleButton_Clicked" Margin="10"/>
+        <Button FontSize="Medium" FontAttributes="Bold" Grid.Row="0" Text="+ Görev Ekle" x:Name="GorevEkleButton" Clicked="GorevEkleButton_Clicked" Margin="10"/>
         
         <CollectionView Grid.Row="1" x:Name="GorevlerCollectionView" Margin="10,0,10,10" SelectionMode="None">
             <CollectionView.ItemTemplate>
