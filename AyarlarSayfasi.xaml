@@ -3,14 +3,21 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MyMauiApp.AyarlarSayfasi"
              Title="Ayarlar">
-    <VerticalStackLayout Spacing="20" Padding="30,0">
-        <Label 
+    <Grid Padding="30,20" ColumnSpacing="10" VerticalOptions="Start">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Label
+            Grid.Column="0"
             Text="Koyu Mod"
-            VerticalOptions="Center" 
+            VerticalOptions="Center"
             HorizontalOptions="Start" />
-        <Switch 
+        <Switch
+            Grid.Column="1"
             x:Name="KoyuModSwitch"
+            VerticalOptions="Center"
             HorizontalOptions="End"
             Toggled="KoyuModSwitch_Toggled" />
-    </VerticalStackLayout>
+    </Grid>
 </ContentPage>

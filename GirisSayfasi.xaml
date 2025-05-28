@@ -6,6 +6,6 @@
         <Entry x:Name="EmailEntry" Placeholder="E-posta" Keyboard="Email"/>
         <Entry x:Name="PasswordEntry" Placeholder="Şifre" IsPassword="True"/>
         <Button Text="Giriş Yap" Clicked="OnLoginButtonClicked"/>
-        <Button Text="Kayıt Ol" Clicked="OnRegisterButtonClicked"/>
+        <Button Background="Transparent" TextColor="DarkOrange" Text="Kayıt Ol" Clicked="OnRegisterButtonClicked"/>
     </VerticalStackLayout>
 </ContentPage>

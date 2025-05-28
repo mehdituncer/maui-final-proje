@@ -7,6 +7,6 @@
         <Entry x:Name="PasswordEntry" Placeholder="Şifre" IsPassword="True"/>
         <Entry x:Name="ConfirmPasswordEntry" Placeholder="Şifre Tekrar" IsPassword="True"/>
         <Button Text="Kayıt Ol" Clicked="OnRegisterButtonClicked"/>
-        <Button Text="Giriş Sayfasına Dön" Clicked="OnBackToLoginButtonClicked"/>
+        <Button Background="Transparent" TextColor="DarkOrange" Text="Giriş Sayfasına Dön" Clicked="OnBackToLoginButtonClicked"/>
     </VerticalStackLayout>
 </ContentPage>

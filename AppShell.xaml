@@ -7,6 +7,16 @@
     Title="MyMauiApp"
     Shell.FlyoutBehavior="Flyout">
 
+    <Shell.ItemTemplate>
+        <DataTemplate>
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="15" Padding="10">
+                <!-- İkon için yer (isteğe bağlı) -->
+                <!-- <Image Source="{Binding FlyoutIcon}" HeightRequest="30" WidthRequest="30" /> -->
+                <Label Grid.Column="1" Text="{Binding Title}" FontSize="17" VerticalTextAlignment="Center"/>
+            </Grid>
+        </DataTemplate>
+    </Shell.ItemTemplate>
+
     <ShellContent
         Title="Giriş Yap"
         Route="GirisSayfasi"

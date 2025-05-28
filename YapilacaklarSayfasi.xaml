@@ -2,24 +2,17 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:models="clr-namespace:MyMauiApp.Models"
-             xmlns:converters="clr-namespace:MyMauiApp.Converters"
              xmlns:local="clr-namespace:MyMauiApp"
              x:Class="MyMauiApp.YapilacaklarSayfasi"
              Title="Yapılacaklar">
     <ContentPage.Resources>
-        <converters:BoolToTamamlaMetniConverter x:Key="BoolToTamamlaMetniConverter"/>
-        <converters:BoolToTamamlaRenkConverter x:Key="BoolToTamamlaRenkConverter"/>
-        <converters:BoolToTamamlaIconConverter x:Key="BoolToTamamlaIconConverter"/>
-        <converters:BoolToBaslikStyleConverter x:Key="BoolToBaslikStyleConverter"/>
-        <converters:BoolToMetinStyleConverter x:Key="BoolToMetinStyleConverter"/>
-
         <Style TargetType="Label" x:Key="GorevMetniStyle">
-            <Setter Property="FontSize" Value="Small"/>
+            <Setter Property="FontSize" Value="15"/>
             <Setter Property="TextColor" Value="{AppThemeBinding Light=Black, Dark=White}"/>
         </Style>
         <Style TargetType="Label" x:Key="GorevBaslikStyle" BasedOn="{StaticResource GorevMetniStyle}">
             <Setter Property="FontAttributes" Value="Bold"/>
-            <Setter Property="FontSize" Value="Large"/> 
+            <Setter Property="FontSize" Value="18"/> 
         </Style>
         <Style TargetType="Label" x:Key="GorevTarihStyle" BasedOn="{StaticResource GorevMetniStyle}">
             <Setter Property="TextColor" Value="Gray"/>
@@ -37,34 +30,60 @@
     
     <Grid RowDefinitions="Auto, *">
         <Button FontSize="Medium" FontAttributes="Bold" Grid.Row="0" Text="+ Görev Ekle" x:Name="GorevEkleButton" Clicked="GorevEkleButton_Clicked" Margin="10"/>
+
         
         <CollectionView Grid.Row="1" x:Name="GorevlerCollectionView" Margin="10,0,10,10" SelectionMode="None">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="models:Gorev">
-                    <SwipeView>
+                    <SwipeView Threshold="50">
                         <SwipeView.RightItems>
                             <SwipeItems Mode="Execute">
-                                <SwipeItem Text="{Binding Tamamlandi, Converter={StaticResource BoolToTamamlaMetniConverter}}"
-                                           BackgroundColor="{Binding Tamamlandi, Converter={StaticResource BoolToTamamlaRenkConverter}}"
-                                           IconImageSource="{Binding Tamamlandi, Converter={StaticResource BoolToTamamlaIconConverter}}"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type local:YapilacaklarSayfasi}}, Path=ToggleTamamlandiCommand}"
-                                           CommandParameter="{Binding .}"/>
+                                <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type local:YapilacaklarSayfasi}}, Path=ToggleTamamlandiCommand}"
+                                               CommandParameter="{Binding .}">
+                                    <SwipeItemView.Style>
+                                        <Style TargetType="SwipeItemView">
+                                            <Setter Property="BackgroundColor" Value="#FF75F875"/>
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="SwipeItemView" Binding="{Binding Tamamlandi}" Value="True">
+                                                    <Setter Property="BackgroundColor" Value="Orange"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </SwipeItemView.Style>
+                                    <Grid Padding="15,0">
+                                        <Label VerticalOptions="Center" HorizontalOptions="End" HorizontalTextAlignment="End">
+                                            <Label.Style>
+                                                <Style TargetType="Label">
+                                                    <Setter Property="Text" Value="✅"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger TargetType="Label" Binding="{Binding Tamamlandi}" Value="True">
+                                                            <Setter Property="Text" Value="↩️"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+                                    </Grid>
+                                </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.RightItems>
                         <SwipeView.LeftItems>
                             <SwipeItems Mode="Execute">
-                                <SwipeItem Text="Sil" 
-                                           BackgroundColor="Red"
-                                           IconImageSource="trash_icon.png"
-                                           Command="{Binding Source={RelativeSource AncestorType={x:Type local:YapilacaklarSayfasi}}, Path=SilGorevCommand}"
-                                           CommandParameter="{Binding .}"/>
+                                <SwipeItemView Command="{Binding Source={RelativeSource AncestorType={x:Type local:YapilacaklarSayfasi}}, Path=SilGorevCommand}"
+                                               CommandParameter="{Binding .}"
+                                               BackgroundColor="#ACFF7E7E">
+                                    <Grid Padding="15,0">
+                                        <Label Text="❌"
+                                               VerticalOptions="Center"
+                                               HorizontalOptions="Start"
+                                               HorizontalTextAlignment="Start"/>
+                                    </Grid>
+                                </SwipeItemView>
                             </SwipeItems>
                         </SwipeView.LeftItems>
                         
                         <Border Padding="10" Margin="0,5" StrokeThickness="1">
-                            <Border.StrokeShape>
-                                <RoundRectangle CornerRadius="5"/>
-                            </Border.StrokeShape>
+
                             <Border.Triggers>
                                 <DataTrigger TargetType="Border" Binding="{Binding Tamamlandi}" Value="True">
                                     <Setter Property="BackgroundColor" Value="LightGreen"/>
@@ -77,14 +96,42 @@
                             </Border.Triggers>
                             <VerticalStackLayout Spacing="5">
                                 <Grid ColumnDefinitions="*,Auto" ColumnSpacing="5">
-                                    <Label Grid.Column="0" Text="{Binding Baslik}" Style="{Binding Tamamlandi, Converter={StaticResource BoolToBaslikStyleConverter}}"/>
-                                    <Button Grid.Column="1" Text="Düzenle" 
+                                    <Label Grid.Column="0" Text="{Binding Baslik}">
+                                        <Label.Style>
+                                            <Style TargetType="Label" BasedOn="{StaticResource GorevBaslikStyle}">
+                                                <Style.Triggers>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Tamamlandi}" Value="True">
+                                                        <Setter Property="Style" Value="{StaticResource TamamlandiGorevBaslikStyle}"/>
+                                                    </DataTrigger>
+                                                    <DataTrigger TargetType="Label" Binding="{Binding Tamamlandi}" Value="False">
+                                                        <Setter Property="Style" Value="{StaticResource GorevBaslikStyle}"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </Label.Style>
+                                    </Label>
+                                    <Button Grid.Column="1" Text="📝 Düzenle" 
                                             Command="{Binding Source={RelativeSource AncestorType={x:Type local:YapilacaklarSayfasi}}, Path=DuzenleGorevCommand}" 
                                             CommandParameter="{Binding .}" 
-                                            FontSize="Micro" Padding="8,4" HeightRequest="30" VerticalOptions="Center"/>
+                                            FontSize="Small" Background="Transparent" FontAttributes="Bold"
+                                            TextColor="DarkOrange"
+                                            HeightRequest="30" VerticalOptions="Center"/>
                                 </Grid>
-                                <Label Text="{Binding Aciklama}" Style="{Binding Tamamlandi, Converter={StaticResource BoolToMetinStyleConverter}}"/>
-                                <Label Text="{Binding BitisTarihiSaati, StringFormat='{0:dd.MM.yyyy HH:mm}'}" Style="{StaticResource GorevTarihStyle}"/>
+                                <Label Text="{Binding Aciklama}">
+                                    <Label.Style>
+                                        <Style TargetType="Label" BasedOn="{StaticResource GorevMetniStyle}">
+                                            <Style.Triggers>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Tamamlandi}" Value="True">
+                                                    <Setter Property="Style" Value="{StaticResource TamamlandiGorevMetniStyle}"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label" Binding="{Binding Tamamlandi}" Value="False">
+                                                    <Setter Property="Style" Value="{StaticResource GorevMetniStyle}"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Label.Style>
+                                </Label>
+                                <Label Text="{Binding BitisTarihiSaati, StringFormat='🗓️ {0:dd.MM.yyyy HH:mm}'}" Style="{StaticResource GorevTarihStyle}"/>
                             </VerticalStackLayout>
                         </Border>
                     </SwipeView>
